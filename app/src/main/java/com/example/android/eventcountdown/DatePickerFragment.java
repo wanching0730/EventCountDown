@@ -11,8 +11,6 @@ import android.widget.EditText;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by WanChing on 13/7/2017.
@@ -20,25 +18,47 @@ import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
+    //this cal only declared once and used throughout the class
+    //use back the previous cal object that entered by user
+    private static Calendar cal = null;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        if(cal == null){
+            //used to get calendar according to the default time and date.
+            cal = Calendar.getInstance();
+        }
+
+        //get CURRENT year, month, day from the calendar
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
 
         return  dialog;
     }
 
+//    @Override
+//    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//        EditText dateSelection = (EditText) getActivity().findViewById(R.id.date_selection);
+//        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
+//        cal.set(year, month, dayOfMonth);
+//        dateSelection.setText(dateFormat.format(cal.getTime()));
+//
+//    }
+
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        EditText dateSelection = (EditText) getActivity().findViewById(R.id.date_selection);
-        final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
-        Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
-        dateSelection.setText(dateFormat.format(cal.getTime()));
+        cal.set(year, month, dayOfMonth);
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM, d, yyyy");
+        //DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
+
+        String date = dateFormat.format(cal.getTime());
+        EditText dateSelection = (EditText) getActivity().findViewById(R.id.date_selection);
+        dateSelection.setText(date);
     }
 }
