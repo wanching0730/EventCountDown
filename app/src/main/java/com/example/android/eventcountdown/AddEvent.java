@@ -32,10 +32,10 @@ public class AddEvent extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sharedPreferences = getSharedPreferences(("spSaveState", Context.MODE_PRIVATE));
+        sharedPreferences = getSharedPreferences("spSaveState", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        etName = (EditText) findViewById(R.id.title);
+        etTitle = (EditText) findViewById(R.id.title);
         etDesc = (EditText) findViewById(R.id.description);
         etDate = (EditText) findViewById(R.id.date_selection);
         etTime = (EditText) findViewById(R.id.time_selection);
