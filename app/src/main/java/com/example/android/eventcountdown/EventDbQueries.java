@@ -51,5 +51,22 @@ public class EventDbQueries {
 
         String selection = EventContract.EventEntry._ID + " = ?";
         String [] selectionArgs = {Long.toString(event.getId())};
+
+        return db.update(
+                EventContract.EventEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+    }
+
+    public void delete (long id){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        String selection = EventContract.EventEntry._ID + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+
+        db.delete(EventContract.EventEntry.TABLE_NAME, selection, selectionArgs);
+
     }
 }
