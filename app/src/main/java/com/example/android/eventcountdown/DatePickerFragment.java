@@ -20,7 +20,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     //this cal only declared once and used throughout the class
     //use back the previous cal object that entered by user
-    private static Calendar cal = null;
+    public static Calendar cal = null;
 
     @NonNull
     @Override

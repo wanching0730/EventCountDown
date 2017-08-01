@@ -12,12 +12,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+
 public class AddEvent extends AppCompatActivity {
 
     private EditText etTitle;
     private EditText etDesc;
     private EditText etDate;
     private EditText etTime;
+
+    private Date newDate;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -44,8 +51,24 @@ public class AddEvent extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String title = etTitle.getText().toString();
+                String desc = etDesc.getText().toString();
+                String date = etDate.getText().toString();
+                //String time = etTime.getText().toString();
+                SimpleDateFormat formatter = new SimpleDateFormat("EEEE, d, mm, yyyy");
+                try {
+                    newDate = formatter.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+//                EventDbQueries dbqueries = new EventDbQueries(new EventDbHelper(getApplicationContext()));
+//                Event event = new Event(0, title, desc, newDate, false);
+//                if(dbqueries.insert(event) != 0){
+//                    saved = true;
+//                }
+
+                finish();
             }
         });
     }
@@ -62,4 +85,40 @@ public class AddEvent extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(saved){
+            editor.clear();
+        }
+        else{
+            String title = etTitle.getText().toString();
+            String desc = etDesc.getText().toString();
+            String date = etDate.getText().toString();
+            //String time = etTime.getText().toString();
+
+            editor.putString("SAVE_STATE_TITLE", title);
+            editor.putString("SAVE_STATE_DESC", desc);
+            editor.putString("SAVE_STATE_DATE", date);
+           // editor.putString("SAVE_STATE_TIME", time);
+        }
+
+        editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String title = sharedPreferences.getString("SAVE_STATE_TITLE", "");
+        String desc = sharedPreferences.getString("SAVE_STATE_DESC", "");
+        String date = sharedPreferences.getString("SAVE_STATE_DATE", "");
+        //String time = sharedPreferences.getString("SAVE_STATE_TIME", "");
+
+        etTitle.setText(title);
+        etDesc.setText(desc);
+        etDate.setText(date);
+        //etTime.setText(time);
+    }
 }
