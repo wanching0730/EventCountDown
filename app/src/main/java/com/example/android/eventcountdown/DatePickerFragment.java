@@ -54,7 +54,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         cal.set(year, month, dayOfMonth);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM, d, yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
         //DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
 
         String date = dateFormat.format(cal.getTime());

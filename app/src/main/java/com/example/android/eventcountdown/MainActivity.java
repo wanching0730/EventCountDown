@@ -1,6 +1,7 @@
 package com.example.android.eventcountdown;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
             }
         });
+
+        listView = (ListView) findViewById(R.id.list_view);
     }
 
 
@@ -53,5 +58,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        EventDbQueries dbQueries = new EventDbQueries(new EventDbHelper(getApplicationContext()));
+
+        String [] columns = {
+                EventContract.EventEntry._ID, EventContract.EventEntry.COLUMN_NAME_TITLE,
+                EventContract.EventEntry.COLUMN_NAME_DESCRIPTION, EventContract.EventEntry.COLUMN_NAME_DATE
+        };
+
+        Cursor cursor = dbQueries.read(columns, null, null, null, null, EventContract.EventEntry.COLUMN_NAME_TITLE + " ASC");
+
+        EventCursorAdapter adapter = new EventCursorAdapter(this, cursor, 0);
+
+        listView.setAdapter(adapter);
     }
 }

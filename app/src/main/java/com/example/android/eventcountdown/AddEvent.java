@@ -3,19 +3,19 @@ package com.example.android.eventcountdown;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.Locale;
 
 public class AddEvent extends AppCompatActivity {
 
@@ -26,10 +26,10 @@ public class AddEvent extends AppCompatActivity {
 
     private Date newDate;
 
+    private boolean saved = false;
+
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-
-    private boolean saved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +51,30 @@ public class AddEvent extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = etTitle.getText().toString();
-                String desc = etDesc.getText().toString();
-                String date = etDate.getText().toString();
-                //String time = etTime.getText().toString();
-                SimpleDateFormat formatter = new SimpleDateFormat("EEEE, d, mm, yyyy");
                 try {
-                    newDate = formatter.parse(date);
+                    String title = etTitle.getText().toString();
+                    String desc = etDesc.getText().toString();
+                    String date = etDate.getText().toString();
+                    String time = etTime.getText().toString();
+                    SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy hh:mm", Locale.ENGLISH);
+
+                    String combination = date + " " + time;
+                    Log.d("DATE", combination);
+                    newDate = formatter.parse(combination);
+
+                    EventDbQueries dbqueries = new EventDbQueries(new EventDbHelper(getApplicationContext()));
+                    Event event = new Event(0, title, desc, newDate, false);
+
+                    if (dbqueries.insert(event) != 0) {
+                        saved = true;
+                        Toast.makeText(AddEvent.this, "success!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                    Toast.makeText(AddEvent.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
-//                EventDbQueries dbqueries = new EventDbQueries(new EventDbHelper(getApplicationContext()));
-//                Event event = new Event(0, title, desc, newDate, false);
-//                if(dbqueries.insert(event) != 0){
-//                    saved = true;
-//                }
-
-                finish();
+                    finish();
+            }
             }
         });
     }
@@ -96,12 +102,12 @@ public class AddEvent extends AppCompatActivity {
             String title = etTitle.getText().toString();
             String desc = etDesc.getText().toString();
             String date = etDate.getText().toString();
-            //String time = etTime.getText().toString();
+            String time = etTime.getText().toString();
 
             editor.putString("SAVE_STATE_TITLE", title);
             editor.putString("SAVE_STATE_DESC", desc);
             editor.putString("SAVE_STATE_DATE", date);
-           // editor.putString("SAVE_STATE_TIME", time);
+            editor.putString("SAVE_STATE_TIME", time);
         }
 
         editor.commit();
@@ -114,11 +120,11 @@ public class AddEvent extends AppCompatActivity {
         String title = sharedPreferences.getString("SAVE_STATE_TITLE", "");
         String desc = sharedPreferences.getString("SAVE_STATE_DESC", "");
         String date = sharedPreferences.getString("SAVE_STATE_DATE", "");
-        //String time = sharedPreferences.getString("SAVE_STATE_TIME", "");
+        String time = sharedPreferences.getString("SAVE_STATE_TIME", "");
 
         etTitle.setText(title);
         etDesc.setText(desc);
         etDate.setText(date);
-        //etTime.setText(time);
+        etTime.setText(time);
     }
 }

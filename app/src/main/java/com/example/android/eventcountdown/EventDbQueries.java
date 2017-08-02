@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by WanChing on 28/7/2017.
  */
@@ -33,9 +35,11 @@ public class EventDbQueries {
     public long insert (Event event){
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
+
         values.put(EventContract.EventEntry.COLUMN_NAME_TITLE, event.getTitle());
         values.put(EventContract.EventEntry.COLUMN_NAME_DESCRIPTION, event.getDescription());
-        //values.put(EventContract.EventEntry.COLUMN_NAME_DATE, event.getDate());
+        values.put(EventContract.EventEntry.COLUMN_NAME_DATE, event.getDateAsCalendar().getTimeInMillis());
+        values.put(EventContract.EventEntry.COLUMN_NAME_NOTIFY, event.isNotify());
 
         long id = db.insert(EventContract.EventEntry.TABLE_NAME, null, values);
         event.setId(id);

@@ -14,7 +14,7 @@ public class EventDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "contact.db";
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE" + EventContract.EventEntry.TABLE_NAME + " (" +
+            "CREATE TABLE " + EventContract.EventEntry.TABLE_NAME + " (" +
                     EventContract.EventEntry._ID + " INTEGER PRIMARY KEY," +
                     EventContract.EventEntry.COLUMN_NAME_TITLE + " TEXT," +
                     EventContract.EventEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
