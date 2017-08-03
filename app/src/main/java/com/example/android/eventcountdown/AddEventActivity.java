@@ -17,7 +17,7 @@ import java.util.Date;
 import java.text.ParseException;
 import java.util.Locale;
 
-public class AddEvent extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
 
     private EditText etTitle;
     private EditText etDesc;
@@ -47,7 +47,7 @@ public class AddEvent extends AppCompatActivity {
         etDate = (EditText) findViewById(R.id.date_selection);
         etTime = (EditText) findViewById(R.id.time_selection);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,11 +67,11 @@ public class AddEvent extends AppCompatActivity {
 
                     if (dbqueries.insert(event) != 0) {
                         saved = true;
-                        Toast.makeText(AddEvent.this, "success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEventActivity.this, "success!", Toast.LENGTH_SHORT).show();
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
-                    Toast.makeText(AddEvent.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEventActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     finish();
             }

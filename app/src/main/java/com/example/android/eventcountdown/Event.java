@@ -25,6 +25,7 @@ public class Event implements java.io.Serializable {
         this.description = description;
         this.date = date;
         this.notify = notify;
+
     }
 
     public Event(long id, String title, String description, Calendar calendar, boolean notify) {
@@ -86,6 +87,8 @@ public class Event implements java.io.Serializable {
         today.set(Calendar.MILLISECOND, 0);
 
         long duration = date.getTime() - today.getTimeInMillis();
+        //getTimeInMillis for Calendar
+        //getTime for Date
 
         Countdown countdown = new Countdown();
         countdown.durationInMillis = duration;

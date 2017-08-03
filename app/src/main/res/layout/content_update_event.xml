@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.mycontacts.UpdateContactActivity"
-    tools:showIn="@layout/activity_update_contact">
+    tools:context="com.example.android.eventcountdown.UpdateEventActivity"
+    tools:showIn="@layout/activity_update_event">
 
-    <include layout="@layout/event_form" />
+    <include layout="@layout/event_form"/>
 
 </android.support.constraint.ConstraintLayout>

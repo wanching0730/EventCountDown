@@ -20,14 +20,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddEvent"
+            android:name=".AddEventActivity"
             android:label="@string/title_activity_add_event"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ViewEventActivity"></activity>
+        <activity android:name=".ViewEventActivity" />
+        <activity
+            android:name=".UpdateEventActivity"
+            android:label="@string/title_activity_update_event"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
