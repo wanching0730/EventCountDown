@@ -2,9 +2,11 @@ package com.example.android.eventcountdown;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.nfc.Tag;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +26,6 @@ public class ViewEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class ViewEventActivity extends AppCompatActivity {
                     cursor.getLong(cursor.getColumnIndex(EventContract.EventEntry._ID)),
                     cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_TITLE)),
                     cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DESCRIPTION)),
+                    //convert Long to Date
                     new Date(cursor.getLong(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE))),
                     changeBoolean(cursor.getInt(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_NOTIFY)))
                     );
@@ -85,6 +87,11 @@ public class ViewEventActivity extends AppCompatActivity {
             else
                 etLeft.setText(getResources().getString(R.string.ago));
 
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }else{
+            Log.e("id not found", Long.toString(cursor.getLong(cursor.getColumnIndex(EventContract.EventEntry._ID))));
+            finish();
         }
 
         fabEdit = (FloatingActionButton) findViewById(R.id.fab_update);
@@ -93,7 +100,8 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UpdateEventActivity.class);
                 intent.putExtra(EXTRA_EVENT, event);
-                startActivity(intent);
+                if(intent.resolveActivity(getPackageManager()) != null)
+                    startActivity(intent);
             }
         });
     }
@@ -115,8 +123,13 @@ public class ViewEventActivity extends AppCompatActivity {
 
         if (id == R.id.action_update) {
             Intent intent = new Intent(getApplicationContext(), UpdateEventActivity.class);
-            startActivity(intent);
+            intent.putExtra(EXTRA_EVENT, event);
+            if(intent.resolveActivity(getPackageManager()) != null)
+                startActivity(intent);
         }
+//        else if (id == R.id.action_delete){
+//
+//        }
 
         return super.onOptionsItemSelected(item);
     }

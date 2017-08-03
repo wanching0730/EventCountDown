@@ -52,6 +52,7 @@ public class EventDbQueries {
         ContentValues values = new ContentValues();
         values.put(EventContract.EventEntry.COLUMN_NAME_TITLE, event.getTitle());
         values.put(EventContract.EventEntry.COLUMN_NAME_DESCRIPTION, event.getDescription());
+        values.put(EventContract.EventEntry.COLUMN_NAME_DATE, event.getDateAsCalendar().getTimeInMillis());
 
         String selection = EventContract.EventEntry._ID + " = ?";
         String [] selectionArgs = {Long.toString(event.getId())};

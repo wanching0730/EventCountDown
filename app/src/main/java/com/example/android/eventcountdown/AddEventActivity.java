@@ -56,7 +56,7 @@ public class AddEventActivity extends AppCompatActivity {
                     String desc = etDesc.getText().toString();
                     String date = etDate.getText().toString();
                     String time = etTime.getText().toString();
-                    SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy hh:mm", Locale.ENGLISH);
+                    SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy HH:mm", Locale.ENGLISH);
 
                     String combination = date + " " + time;
                     Log.d("DATE", combination);
@@ -67,13 +67,14 @@ public class AddEventActivity extends AppCompatActivity {
 
                     if (dbqueries.insert(event) != 0) {
                         saved = true;
-                        Toast.makeText(AddEventActivity.this, "success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEventActivity.this, "Event inserted successfully!", Toast.LENGTH_SHORT).show();
+
+                        //onPause(), onStop(), onDestroy()
+                        finish();
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
                     Toast.makeText(AddEventActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    finish();
             }
             }
         });

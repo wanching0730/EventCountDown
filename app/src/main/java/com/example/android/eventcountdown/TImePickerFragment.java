@@ -31,7 +31,7 @@ public class TImePickerFragment extends DialogFragment implements TimePickerDial
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, hour, minute, false);
+        TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, hour, minute, true);
 
         return  dialog;
 
@@ -40,7 +40,7 @@ public class TImePickerFragment extends DialogFragment implements TimePickerDial
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         calendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, hourOfDay, minute, Calendar.SECOND);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         String time = dateFormat.format(calendar.getTime());
         EditText timeSelection = (EditText) getActivity().findViewById(R.id.time_selection);
         timeSelection.setText(time);

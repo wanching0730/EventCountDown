@@ -2,6 +2,7 @@
     <string name="app_name">EventCountDown</string>
     <string name="action_settings">Settings</string>
     <string name="action_delete">Delete</string>
+    <string name="action_update">Update</string>
     <string name="title_activity_add_event">AddEvent</string>
     <string name="left">Left</string>
     <string name="ago">Ago</string>
