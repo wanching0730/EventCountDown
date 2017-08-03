@@ -11,10 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listView;
+    public static final String EXTRA_ID = "com.example.android.EventCountDown.ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         listView = (ListView) findViewById(R.id.list_view);
-    }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Cursor cursor = (Cursor)adapterView.getItemAtPosition(position);
 
+                Intent intent = new Intent(MainActivity.this, ViewEventActivity.class);
+                intent.putExtra(EXTRA_ID, cursor.getLong(cursor.getColumnIndex(EventContract.EventEntry._ID)));
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

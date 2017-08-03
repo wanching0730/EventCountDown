@@ -15,7 +15,7 @@ public class Event implements java.io.Serializable {
     private Date date;
     private boolean notify;
 
-    public Event() {
+    public Event(long aLong, String string, String cursorString, long cursorLong) {
         this(0, "", "", Calendar.getInstance(), false);
     }
 
