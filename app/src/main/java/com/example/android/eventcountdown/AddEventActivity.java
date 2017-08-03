@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.ParseException;
 import java.util.Locale;
@@ -75,10 +76,11 @@ public class AddEventActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                     Toast.makeText(AddEventActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                }
             }
         });
     }
+
 
     public void SetDate(View view){
         DialogFragment fragment = new DatePickerFragment();

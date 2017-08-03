@@ -127,9 +127,12 @@ public class ViewEventActivity extends AppCompatActivity {
             if(intent.resolveActivity(getPackageManager()) != null)
                 startActivity(intent);
         }
-//        else if (id == R.id.action_delete){
-//
-//        }
+        else if (id == R.id.action_delete){
+            EventDbQueries dbq = new EventDbQueries(new EventDbHelper(getApplicationContext()));
+            dbq.delete(event.getId());
+
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }
