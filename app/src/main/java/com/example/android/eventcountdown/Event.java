@@ -89,6 +89,7 @@ public class Event implements java.io.Serializable {
         long duration = date.getTime() - today.getTimeInMillis();
         //getTimeInMillis for Calendar
         //getTime for Date
+        //both return long
 
         Countdown countdown = new Countdown();
         countdown.durationInMillis = duration;

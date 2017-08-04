@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class EventDbHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "contact.db";
+    public static final String DATABASE_NAME = "event.db";
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + EventContract.EventEntry.TABLE_NAME + " (" +
