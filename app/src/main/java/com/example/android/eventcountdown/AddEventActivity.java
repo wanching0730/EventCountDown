@@ -60,7 +60,6 @@ public class AddEventActivity extends AppCompatActivity {
                     SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy HH:mm", Locale.ENGLISH);
 
                     String combination = date + " " + time;
-                    Log.d("DATE", combination);
                     newDate = formatter.parse(combination);
 
                     EventDbQueries dbqueries = new EventDbQueries(new EventDbHelper(getApplicationContext()));
