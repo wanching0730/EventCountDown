@@ -20,6 +20,7 @@ import java.util.Locale;
 
 public class AddEventActivity extends AppCompatActivity {
 
+    //
     private EditText etTitle;
     private EditText etDesc;
     private EditText etDate;
